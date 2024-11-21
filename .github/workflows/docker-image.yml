@@ -44,6 +44,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           platforms: linux/amd64,linux/arm64
-          context: ./api-laravel-crud
+          context: .
           push: true
           tags: ghcr.io/hngkhermn/multiple-app:latest
