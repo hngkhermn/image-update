@@ -27,7 +27,7 @@ jobs:
           password: ${{ secrets.GHCR_PAT }}
 
       - name: Set up PHP and Composer
-        uses:shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
       
