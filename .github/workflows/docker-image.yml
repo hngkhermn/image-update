@@ -26,6 +26,23 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_PAT }}
 
+      - name: Set up PHP and Composer
+        uses:shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+      
+      - name: Install Composer and Dependencies
+        run: |
+          curl -sS https://getcomposer.org/installer | php
+          php composer.phar install --no-interaction --prefer-dist
+
+      - name: Copy .env.example to .env
+        run: |
+          cp .env.example .env
+          echo "DB_HOST=db-server" >> .env
+          echo "DB_DATABASE=db_laravel" >> .env
+          echo "DB_PASSWORD=232425" >> .env
+
       - name: Build and push to GitHub Container Registry
         uses: docker/build-push-action@v5
         with:
