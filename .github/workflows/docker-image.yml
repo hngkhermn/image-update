@@ -43,6 +43,13 @@ jobs:
           echo "DB_DATABASE=db_laravel" >> .env
           echo "DB_PASSWORD=232425" >> .env
 
+      - name: php artisan
+        run: |
+          php artisan key:generate
+          php artisan migrate
+          php artisan cache:clear
+          php artisan test
+
       - name: Build and push to GitHub Container Registry
         uses: docker/build-push-action@v5
         with:
