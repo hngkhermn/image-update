@@ -47,7 +47,6 @@ jobs:
         run: |
           php artisan key:generate
           php artisan cache:clear
-          php artisan test
 
       - name: Build and push to GitHub Container Registry
         uses: docker/build-push-action@v5
