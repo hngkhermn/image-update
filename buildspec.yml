@@ -35,8 +35,7 @@ phases:
 
       # Build Docker Image
       - echo Building Docker Image...
-      - docker buildx create --use
-      - docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/hngkhermn/multiple-app:latest .
+      - docker build -t ghcr.io/hngkhermn/multiple-app:latest .
 
   post_build:
     commands:
