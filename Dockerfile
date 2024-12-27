@@ -35,10 +35,6 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Install dependensi PHP untuk Laravel (Composer install)
 RUN composer install --no-dev --optimize-autoloader
 
-# Menjalankan php artisan key:generate dan php artisan cache:clear
-RUN php artisan key:generate \
-    && php artisan cache:clear
-
 # Set izin untuk direktori Laravel
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
