@@ -4,45 +4,24 @@ phases:
   install:
     runtime-versions:
       docker: 20
-      php: 8.1
     commands:
-      # Instalasi Composer
-      - echo Installing Composer...
-      - curl -sS https://getcomposer.org/installer | php
-      - sudo mv composer.phar /usr/local/bin/composer
+      - echo Installing Docker...
+      - docker --version
+
   pre_build:
     commands:
-      # Login ke Docker Hub
       - echo Logging in to GitHub Container Registry...
-      - echo $GHCR_PAT | docker login ghcr.io -u $SOURCE_VERSION --password-stdin
+      - echo $GHCR_TOKEN | docker login ghcr.io -u $SOURCE_VERSION --password-stdin
+
   build:
     commands:
-      # Setup PHP dependencies
-      - echo Installing PHP dependencies...
-      - composer install --no-interaction --prefer-dist
-
-      # Menyalin .env.example menjadi .env
-      - echo Copying .env.example to .env...
-      - cp .env.example .env
-      - echo "DB_HOST=db-server" >> .env
-      - echo "DB_DATABASE=db_laravel" >> .env
-      - echo "DB_PASSWORD=232425" >> .env
-
-      # Jalankan artisan commands
-      - echo Running Artisan commands...
-      - php artisan key:generate
-      - php artisan cache:clear
-
-      # Build Docker Image
-      - echo Building Docker Image...
-      - docker build -t ghcr.io/hngkhermn/multiple-app:latest .
+      - echo Building the Docker image...
+      - docker build -t ghcr.io/hngkhermn/laravel-app:latest .
 
   post_build:
     commands:
-      # Push Docker Image ke GitHub Container Registry
-      - echo Pushing Docker Image to GitHub Container Registry...
-      - docker push ghcr.io/hngkhermn/multiple-app:latest
+      - echo Pushing the Docker image to GHCR...
+      - docker push ghcr.io/hngkhermn/laravel-app:latest
 
 artifacts:
-  files:
-    - '**/*'
+  files: []
