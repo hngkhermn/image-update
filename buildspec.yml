@@ -10,18 +10,18 @@ phases:
 
   pre_build:
     commands:
-      - echo Logging in to GitHub Container Registry...
-      - echo $github_token | docker login ghcr.io -u main --password-stdin
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --no-include-email --region $AWS_REGION)
 
   build:
     commands:
       - echo Building the Docker image...
-      - docker build -t ghcr.io/hngkhermn/laravel-app:latest .
+      - docker build -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/laravel-app:latest .
 
   post_build:
     commands:
-      - echo Pushing the Docker image to GHCR...
-      - docker push ghcr.io/hngkhermn/laravel-app:latest
+      - echo Pushing the Docker image to ECR...
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/laravel-app:latest
 
 artifacts:
   files: []
