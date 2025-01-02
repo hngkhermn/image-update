@@ -11,7 +11,7 @@ phases:
   pre_build:
     commands:
       - echo Logging in to GitHub Container Registry...
-      - echo $github_token | docker login ghcr.io -u $SOURCE_VERSION --password-stdin
+      - echo $github_token | docker login ghcr.io -u main --password-stdin
 
   build:
     commands:
