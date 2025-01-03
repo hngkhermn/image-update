@@ -42,6 +42,6 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/laravel-app:${{ github.sha }}
-        cache-from: type=registry,ref=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/laravel-app:${{ github.sha }}
+        tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/laravel-app:latest
+        cache-from: type=registry,ref=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/laravel-app:latest
         cache-to: type=inline
