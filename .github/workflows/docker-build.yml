@@ -1,4 +1,4 @@
-name: Build and Push Docker Image to ECR
+name: Build and Push Docker Image to GHCR
 
 on:
   push:
@@ -27,21 +27,18 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-buildx-
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v4
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v2
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
-
-    - name: Log in to Amazon ECR
-      uses: aws-actions/amazon-ecr-login@v2
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GHCR_PAT }}
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v3
       with:
         context: .
         push: true
-        tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/laravel-app:latest
-        cache-from: type=registry,ref=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/laravel-app:latest
+        tags: ghcr.io/hngkhermn/laravel-app:latest
+        cache-from: type=registry,ref=ghcr.io/hngkhermn/laravel-app:latest
         cache-to: type=inline
