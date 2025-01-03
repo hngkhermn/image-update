@@ -35,13 +35,13 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
+        aws-region: ${{ secret.AWS_REGION }}
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v3
       with:
         context: .
         push: true
-        tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/laravel-app:latest
-        cache-from: type=registry,ref=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/laravel-app:latest
+        tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secret.AWS_REGION }}.amazonaws.com/laravel-app:latest
+        cache-from: type=registry,ref=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secret.AWS_REGION }}.amazonaws.com/laravel-app:latest
         cache-to: type=inline
