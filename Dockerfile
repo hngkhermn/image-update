@@ -7,6 +7,9 @@ WORKDIR /var/www/html
 # Menyalin semua file dari folder proyek ke direktori kerja container
 COPY . .
 
+# Salin file .env.example ke .env
+RUN cp .env.example .env
+
 # Install dependensi sistem yang diperlukan
 RUN apt-get update && apt-get install -y \
     build-essential \
